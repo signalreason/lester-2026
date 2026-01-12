@@ -1,0 +1,190 @@
+:root {
+  color-scheme: light;
+  --ink: #141414;
+  --muted: #5e6b6a;
+  --accent: #e07b2f;
+  --accent-2: #1f7a8c;
+  --panel: #fdf7f0;
+  --panel-border: #ead6c3;
+  --shadow: 0 22px 40px rgba(43, 30, 12, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", "Avenir Next", "Helvetica Neue", sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #ffe8c7 0%, #f8f1e7 40%, #eef7f6 100%);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(31, 122, 140, 0.08) 1px, transparent 1px),
+    radial-gradient(rgba(224, 123, 47, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px, 40px 40px;
+  background-position: 0 0, 12px 12px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  animation: rise 600ms ease both;
+}
+
+.panel h2 {
+  margin: 0 0 12px 0;
+  font-size: 20px;
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(31, 122, 140, 0.12);
+  color: var(--accent-2);
+  font-weight: 600;
+  font-size: calc(12px + var(--size) * 8px);
+  transition: transform 200ms ease;
+}
+
+.tag:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list button,
+button.primary {
+  border: none;
+  background: none;
+  text-align: left;
+  font: inherit;
+  padding: 8px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.list button.active,
+.list button:hover {
+  background: rgba(224, 123, 47, 0.15);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+input,
+textarea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--panel-border);
+  padding: 10px 12px;
+  font: inherit;
+  background: #fffaf3;
+}
+
+button.primary {
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  text-align: center;
+}
+
+.bookmark {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #fffdfa;
+  border: 1px solid rgba(224, 123, 47, 0.2);
+  animation: fadeUp 500ms ease both;
+}
+
+.bookmark small {
+  color: var(--muted);
+}
+
+.search-row {
+  display: flex;
+  gap: 12px;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+}

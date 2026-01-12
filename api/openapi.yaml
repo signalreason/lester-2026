@@ -1,0 +1,212 @@
+openapi: 3.0.3
+info:
+  title: Lester Browserd API
+  version: 0.1.0
+servers:
+  - url: http://127.0.0.1:7316
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+  /workspaces:
+    get:
+      summary: List workspaces
+      responses:
+        '200':
+          description: Workspaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspace'
+    post:
+      summary: Create workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceInput'
+      responses:
+        '200':
+          description: Workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+  /bookmarks:
+    get:
+      summary: List bookmarks
+      parameters:
+        - in: query
+          name: workspace_id
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: tag
+          schema:
+            type: string
+        - in: query
+          name: q
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Bookmarks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bookmark'
+    post:
+      summary: Create bookmark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookmarkInput'
+      responses:
+        '200':
+          description: Bookmark and tag job
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookmark:
+                    $ref: '#/components/schemas/Bookmark'
+                  job:
+                    $ref: '#/components/schemas/TagJob'
+  /tags:
+    get:
+      summary: List tags
+      responses:
+        '200':
+          description: Tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tag'
+  /tag-cloud:
+    get:
+      summary: Tag cloud
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tag cloud
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagCloudEntry'
+components:
+  schemas:
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created_at:
+          type: integer
+    WorkspaceInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    Bookmark:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        url:
+          type: string
+        title:
+          type: string
+        notes:
+          type: string
+          nullable: true
+        created_at:
+          type: integer
+        updated_at:
+          type: integer
+    BookmarkInput:
+      type: object
+      properties:
+        workspace_id:
+          type: string
+          format: uuid
+        url:
+          type: string
+        title:
+          type: string
+        notes:
+          type: string
+          nullable: true
+      required:
+        - workspace_id
+        - url
+        - title
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        created_at:
+          type: integer
+    TagJob:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        bookmark_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+        attempts:
+          type: integer
+        created_at:
+          type: integer
+        updated_at:
+          type: integer
+    TagCloudEntry:
+      type: object
+      properties:
+        name:
+          type: string
+        weight:
+          type: number
