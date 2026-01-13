@@ -2,6 +2,14 @@
 
 AI-first research browser optimized for tagging, workspaces, and privacy.
 
+## Purpose
+- Provide a local-first research browser with tagging and workspace workflows.
+
+## Goals
+- Keep data private by default while supporting optional encrypted sync.
+- Expose a local API for UI workflows and automation.
+- Automate tag enrichment through background jobs.
+
 ## Architecture at a glance
 - Rust core for storage, tagging rules, and sync logic.
 - `browserd` daemon exposes a local JSON API.
@@ -21,6 +29,7 @@ AI-first research browser optimized for tagging, workspaces, and privacy.
 The API defaults to `http://127.0.0.1:7316`. Override with `LESTER_ADDR`.
 
 ## Docs
+- `docs/REPO_MAP.md`
 - `docs/ARCHITECTURE.md`
 - `docs/RUST_CORE.md`
 - `docs/UI.md`
