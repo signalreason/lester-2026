@@ -13,11 +13,6 @@ AI-first research browser optimized for tagging, workspaces, and privacy.
 ## Highest-Impact Next Step
 - Ship the core tagging workflow end-to-end (create, tag, search) across `browserd`, `llm-worker`, and the UI.
 
-## Checks
-- Status: none (no GitHub Actions runs found).
-- TODO: Add CI for `cargo fmt --check`, `cargo clippy`, and `cargo test` on core crates.
-- TODO: Add UI build checks with `npm ci` and `npm run build` in `apps/ui`.
-
 ## Architecture at a glance
 - Rust core for storage, tagging rules, and sync logic.
 - `browserd` daemon exposes a local JSON API.
